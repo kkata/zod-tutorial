@@ -5,9 +5,14 @@ import { z } from "zod";
 
 const Form = z.object({
   repoName: z.string(),
-  keywords: z.array(z.string()).optional(),
+  keywords: z.array(z.string()).default([]),
   //                           ^ 🕵️‍♂️
 });
+
+// z.input: This function transforms the input to the form.
+// It's not necessary, but it's a nice way to make sure that the input is valid.
+type FormInput = z.input<typeof Form>;
+type FormOutput = z.infer<typeof Form>;
 
 export const validateFormInput = (values: unknown) => {
   const parsedData = Form.parse(values);
